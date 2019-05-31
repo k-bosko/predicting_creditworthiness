@@ -9,7 +9,7 @@
 
 ## Installation
 - Python 3.7.2
-- _Libraries_: 
+- Libraries: 
   - [NumPy](http://www.numpy.org/)
   - [Pandas](http://pandas.pydata.org)
   - [matplotlib](http://matplotlib.org/)
@@ -40,7 +40,7 @@ You can find the results of the analysis in either html form or complete Jupyter
 * [Predicting_Creditworthiness.html](https://github.com/k-bosko/predicting_creditworthiness/blob/master/Predicting_Creditworthiness.html)
 * [Predicting_Creditworthiness.ipynb](https://github.com/k-bosko/predicting_creditworthiness/blob/master/Predicting_Creditworthiness.ipynb)
 
-Alterinatively, run one the following commands in a terminal after navigating to the top-level project directory `finding_donors/` (that contains this README):
+Alterinatively, run one the following commands in a terminal after navigating to the top-level project directory `predicting_creditworthiness/` (that contains this README):
 
 ```bash
 ipython notebook Predicting_Creditworthiness.ipynb
@@ -54,18 +54,34 @@ This will open the iPython Notebook software and project file in your browser.
 
 ## Results
 
-To identify the creditworthy applicants I performed the following steps:
+To identify the creditworthy applicants, I performed the following steps:
 
 - **Step 1: Preprocessing**
-  - removed certain predictors either due to low variability or no logical connection to the response variable
-  
-  Cleanup, format, and blend a wide range of data sources
-  built predictive classification models using Logistic Regression, Decision Tree, Random Forest, and Boosted Model
+  - removed certain predictors either due to low variability or no logical connection with the target
+  - imputed missing values with median
+  - one-hot encoded the predictors and the target with `pd.get_dummies()`
+  - split the data into training and testing sets with `train_test_split()` 
+
 - **Step 2: Creating a Training and Predicting Pipeline**
-    
+  - initialized and fit classification models:
+    - `DecisionTreeClassifier()`
+    - `RandomForestClassifier()`
+    - `AdaBoostClassifier()`
+  - created `predict_evaluate()` function to predict `X_test` values 
+  - evaluated the performance of the three models via `accuracy_score()`, `f1_score()`, `roc_curve()`
+  
 - **Step 3: Improving Results**
-   
-- **Step 4: Extracting Feature Importance**
+  - performed a grid search optimization via `GridSearchCV(`) for two parameters `n_estimators` and `learning_rate`
+  - made predictions using the unoptimized and optimized model
+  - compared the before-and-after scores (accuracy and F-score) on the testing data
+  
+- **Step 4: Predicting the Creditworthiness**
+  - performed the same data transformations on new loan applicants data as was done on the training set
+  - predicted the creditwothiness using the optimized `RandomForestClassifier()`
+  
+- **Step 5: Extracting Feature Importance**
+  - determined the top5 most predictive features using `feature_importances_` attribute
+
 
 ## Acknowledgements
 
